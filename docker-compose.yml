@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  db:
+    image: mariadb
+    restart: ${DOCKER_RESTART}
+    env_file:
+      - .env
+    environment:
+      MARIADB_ROOT_PASSWORD: '${ROOT_PASSWORD}'
+      MYSQL_USER: '${DB_USER}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_DATABASE: '${DB_DATABASE}'
+    ports:
+      - '${DB_PORT}:3306'
+    volumes:
+      - db_data:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin
+    restart: ${DOCKER_RESTART}
+    ports:
+      - 8080:80
+
+volumes:
+  db_data:
